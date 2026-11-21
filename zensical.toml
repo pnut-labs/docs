@@ -13,12 +13,56 @@ copyright = "Copyright 2026 Mateusz Pianka — Apache-2.0"
 
 nav = [
   { "Home" = "index.md" },
-  { "Writing these docs" = "writing.md" },
+  { "Getting started" = [
+    { "Building" = "getting-started/building.md" },
+    { "Flashing" = "getting-started/flashing.md" },
+    { "The shell over serial" = "getting-started/shell.md" },
+    { "adb over Wi-Fi" = "getting-started/adb.md" },
+  ] },
+  { "Architecture" = [
+    { "Programs and modules" = "architecture/programs.md" },
+    { "The event loop" = "architecture/loop.md" },
+    { "IPC: services, clients, streams" = "architecture/ipc.md" },
+    { "Topics and settings" = "architecture/topics-settings.md" },
+    { "Generated code" = "architecture/generated.md" },
+    { "Logging" = "architecture/logging.md" },
+    { "Storage layout" = "architecture/storage.md" },
+    { "Power management" = "architecture/power.md" },
+  ] },
+  { "Subsystems" = [
+    { "Board" = "subsystems/board.md" },
+    { "Service states" = "subsystems/service-states.md" },
+    { "Settings" = "subsystems/settings.md" },
+    { "Time" = "subsystems/time.md" },
+    { "Power" = "subsystems/power.md" },
+    { "Telephony" = "subsystems/telephony.md" },
+    { "Network and Wi-Fi" = "subsystems/network.md" },
+    { "Messages" = "subsystems/messages.md" },
+    { "LoRa" = "subsystems/radio.md" },
+    { "Location" = "subsystems/location.md" },
+    { "Motion" = "subsystems/motion.md" },
+    { "Haptics" = "subsystems/haptics.md" },
+    { "Storage (cards)" = "subsystems/storage-cards.md" },
+    { "Firmware updates" = "subsystems/updates.md" },
+  ] },
+  { "System UI" = [
+    { "Screens and the stack" = "system-ui/screens.md" },
+    { "Keys and input" = "system-ui/input.md" },
+    { "E-paper redraw rules" = "system-ui/epaper.md" },
+    { "Templates and app hosting" = "system-ui/apps.md" },
+    { "Theme" = "system-ui/theme.md" },
+  ] },
+  { "Apps" = [
+    { "Writing an app" = "apps/index.md" },
+  ] },
   { "Interfaces" = [
   # interfaces: begin (tools/proto_pages.py)
     { "Overview" = "interfaces/index.md" },
   # interfaces: end
   ] },
+  { "Testing" = "testing/index.md" },
+  { "Device and tooling traps" = "traps.md" },
+  { "Writing these docs" = "writing.md" },
 ]
 
 [project.theme]
