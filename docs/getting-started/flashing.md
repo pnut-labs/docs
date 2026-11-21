@@ -7,7 +7,7 @@ make tdeck-max flash          # ESPTOOL_PORT, /dev/ttyACM0 by default
 writes MCUboot, and the firmware into the first slot, confirmed. The image
 is padded to the slot's 4 MB, which esptool compresses. The rest of the
 flash is not written, so the system partition keeps its files: settings,
-logs, messages, notifications survive a flash.
+logs and messages survive a flash.
 
 ## The flash
 
@@ -49,5 +49,7 @@ back to master afterwards, so it never stays on a test image.
     port may return as `/dev/ttyACM1`. Set `ESPTOOL_PORT`.
 
 !!! warning "Trap: a program that asserts at its start"
-    The board resets on an assertion; a pnut-os program that asserts as it
-    starts resets it in a loop. Flash a fixed image to get out.
+    An assertion in an interrupt handler or a kernel thread resets the
+    board. One in a pnut-os program ends that program, and NxInit starts it
+    again: a program that asserts as it starts restarts in a loop
+    (`logs crashes` shows why). Flash a fixed image to get out.

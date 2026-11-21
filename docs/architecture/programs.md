@@ -39,8 +39,9 @@ program is ready once all are — NxInit is told, and Service states knows
 
 A service knows its caller's task from `SO_PEERCRED`; Service states'
 `Who` turns the task into its program's name, and says whether it was
-typed in a developer's shell (`console` or `adbd`, RFC 0012). Settings, the
-system UI and Notifications decide what a caller may do from that.
+typed in a developer's shell (`console` or `adbd`, RFC 0012). Settings,
+Time, the log, Telephony, Wi-Fi, Messages and the system UI decide what a
+caller may do from that.
 
 ## The settings' owners
 

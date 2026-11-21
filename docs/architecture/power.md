@@ -12,22 +12,34 @@ ESP32-S3 light-sleeps until the scheduler's next timer.
 
 ## What holds it awake
 
-- USB power present (the charger's power-good, polled every 2 s);
-- the backlights on; the GPS, modem and audio rails up; the radios up;
+- USB power present (the charger is asked every 2 s);
+- a light on;
+- the GNSS receiver's rail on (its UART stops in light sleep);
+- the modem's UART in use, and for 1 s after; its ring indicator low, and
+  for 2 s after. The modem's rail itself does not hold it: the device
+  light-sleeps with the modem on;
+- an audio stream reserved (`/dev/audio/pcm0`, `/dev/audio/pcm_in0`);
+- Wi-Fi once brought up (until a restart); the Bluetooth controller while
+  it runs;
 - an I2C transfer, an SPI DMA transfer;
-- pnut-os itself, through `/dev/awake`.
+- console input, for 6 s;
+- `/dev/awake` while it is open, for a program that needs the device
+  awake.
 
-Wake sources: the keyboard, the touch layer while it is open, the BOOT
-key, LoRa's DIO1, the IMU's interrupt.
+The named holds show in `/proc/pm/wakelock0` on the device. Wake
+sources: the keyboard, the touch layer while it is open, LoRa's DIO1, the
+IMU's interrupt, and the modem's ring indicator while the modem's rail is
+on.
 
 !!! info "Why idle at 80 MHz"
     DFS runs the CPU at 80 MHz when idle and 240 MHz when busy, with the
     chip's own calibrated core voltages (eFuse): awake went from 43 to
     27 mA.
 
-!!! warning "Trap: the GNSS receiver's TX line"
-    With the GPS rail off, its UART's TX line left high fed the receiver
-    through its input: 25 mA. It is driven low while the rail is off.
+!!! warning "Trap: the GNSS UART's transmit line"
+    With the GPS rail off, the chip's transmit line into the receiver
+    (GPIO 16), left high, fed the receiver through its input: 25 mA. It is
+    held low while the rail is off.
 
 !!! warning "Trap: the modem's sleep"
     Both ways of letting the modem sleep (its own and DTR's) proved

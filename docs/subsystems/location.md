@@ -19,6 +19,7 @@ Interface: [Location](../interfaces/location.md). Code: `src/sensors/`.
     Never in a log above debug, a file outside its state, a report or a pull
     request.
 
-!!! warning "Trap: the receiver's TX line"
-    Left high while the GPS rail was off, it fed the receiver: 25 mA. It is
-    driven low while the rail is off.
+!!! warning "Trap: the UART's transmit line into the receiver"
+    The chip's transmit line to the receiver (GPIO 16), left high while the
+    GPS rail was off, fed the receiver about 25 mA. It is held low while
+    the rail is off.

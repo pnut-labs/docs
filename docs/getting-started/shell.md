@@ -7,7 +7,7 @@ pyserial):
 
 ```sh
 python3 tools/device/nsh.py "uname -a" "free" "logs warning"
-python3 tools/device/uiscreen.py -o shot.png "keys alt+n" "keys s"
+python3 tools/device/uiscreen.py -o shot.png "keys alt+enter" "keys s"
 ```
 
 `nsh.py` sends each command and prints its output up to the next prompt;
@@ -20,7 +20,7 @@ PNG. Close any other serial monitor first.
 |---|---|
 | `keys w alt+enter f2`, `keys text <word>` | presses keys as the keyboard's driver gives them |
 | `screen` | the framebuffer as a base64 PBM |
-| `logs [<level>] [<service>]`, `logs crashes` | the log kept in files across restarts, the crash reports |
+| `logs [<level>] [<service>]`, `logs crashes` | the log's warnings and errors, kept in files across restarts, and the crash reports (`dmesg` shows the RAM log) |
 | `settings list <owner>`, `get`, `set`, `reset` | any program's settings, as the system UI may |
 | `telephony`, `messages`, `wifi`, `radio`, `location`, `motion`, `haptics` | each service's state and its calls |
 | `uidemo list` … | an app from the shell showing one of the system UI's templates with made-up content |
@@ -38,9 +38,11 @@ names and real messages.
     arguments to plain words.
 
 !!! warning "Trap: a command's length"
-    A line is 128 bytes at most, and 16 arguments: over them NSH prints an
-    error but still runs the command, cut. `nsh.py --pace 32` types a long
-    line slowly: the console drops characters of a fast one.
+    A line is 256 bytes at most, and 64 arguments (`CONFIG_LINE_MAX`,
+    `CONFIG_NSH_MAXARGUMENTS`; the board's own configuration has 128 and
+    16): over them NSH prints an error but still runs the command, cut.
+    `nsh.py --pace 32` types a long line slowly: the console drops
+    characters of a fast one.
 
 !!! warning "Trap: background output"
     A background command (`cmd &`) writes to the console whenever it likes,

@@ -3,7 +3,7 @@
 | Command | Runs |
 |---|---|
 | `make test` | the unit tests on the computer (cmocka), and the system UI's screens compared with the images kept |
-| `make sim test` | libpnut's tests inside NuttX's simulator |
+| `make sim test` | libpnut's tests, and the system program's (Board, Power, Settings and its cache, Service states, Time's clock), inside NuttX's simulator; the list is in `configs/sim/target.mk` |
 | `make style` | NuttX's `nxstyle` on the C code |
 
 CI (`.github/workflows/build.yml`) runs the three on every pull request.

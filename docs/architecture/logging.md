@@ -11,18 +11,19 @@ at one of four levels: **error** (someone should look), **warning**,
 - A line is 160 characters at most. A module logging more than 50 lines in
   a second has the rest dropped and counted, and one line says how many,
   so that no module floods the log.
-- The system program keeps the log in files across restarts
-  (`/var/lib/log` on the device) and the crash reports beside them:
-  `logs [<level>] [<service>]`, `logs crashes`, `logs crash <name>`.
+- The system program keeps the log's warnings and errors in files across
+  restarts (`/var/lib/log` on the device) and the crash reports beside
+  them: `logs [<level>] [<service>]`, `logs crashes`, `logs crash <name>`.
+  Info and debug lines are only in the RAM log (`dmesg`), which the
+  T-Deck Max keeps across a reset.
 
 ## What never goes in the log
 
 - No passphrase, PIN or key, at any level.
-- No phone number, message text or notification text above **debug**; a
-  touch is logged by its duration and movement, never its coordinates; a
-  position never.
+- No phone number or message text above **debug**; a position never.
 
 !!! info "Why"
-    The log is kept in files and read over adb or the shell; a person
-    debugging should not see what the owner wrote or where they were. At
-    debug, the developer asked for it on their own device.
+    The log is read over adb or the shell, and its warnings and errors
+    are kept in files; a person debugging should not see what the owner
+    wrote or where they were. At debug, the developer asked for it on
+    their own device.

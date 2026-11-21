@@ -28,10 +28,21 @@ they differ.
 | `sim` | gcc, zlib's headers |
 | `qemu`, `tdeck-max` | Espressif's `xtensa-esp-elf` **14.2**, esptool, Espressif's QEMU |
 | `tdeck-max` | the network while it builds (the IMU's firmware, MCUboot's sources, at pinned commits), CMake, MCUboot's `imgtool` |
-| `make test` | cmocka and libsodium |
+| `make test` | cmocka and libsodium; the network, for LVGL 9.2.2 (checked against its checksum) |
+| `make test`, `tdeck-max` | the system UI's fonts and icons: freetype-py and PyMuPDF, as pinned in `tools/requirements.txt`, in the Python that `UI_PYTHON` names (`PYTHON` by default) |
 
 On Debian: `apt install kconfig-frontends python3-kconfiglib
-protobuf-compiler python3-protobuf libcmocka-dev libsodium-dev`.
+protobuf-compiler python3-protobuf libcmocka-dev libsodium-dev`. CI
+installs the pinned packages in a venv outside the tree; the same works on
+a computer:
+
+```sh
+python3 -m venv "$HOME/.cache/pnut-ui"
+"$HOME/.cache/pnut-ui/bin/pip" install -r tools/requirements.txt
+make test UI_PYTHON="$HOME/.cache/pnut-ui/bin/python3"
+```
+
+[Theme](../system-ui/theme.md) says why they are pinned.
 
 !!! warning "Trap: GCC 15"
     GCC 15 defaults to C23, which the Espressif HAL does not build with.
@@ -40,7 +51,9 @@ protobuf-compiler python3-protobuf libcmocka-dev libsodium-dev`.
 !!! warning "Trap: ESP-IDF's Python"
     ESP-IDF's Python environment has a kconfiglib of its own that cannot
     read NuttX's Kconfig. When it comes first on the `PATH`, name another:
-    `make tdeck-max PYTHON=/usr/bin/python3`.
+    `make tdeck-max PYTHON=/usr/bin/python3`. `UI_PYTHON` follows `PYTHON`
+    unless it is given too, so name the venv with the pinned packages as
+    well: `UI_PYTHON="$HOME/.cache/pnut-ui/bin/python3"`.
 
 ## Commands
 
@@ -50,7 +63,8 @@ protobuf-compiler python3-protobuf libcmocka-dev libsodium-dev`.
 | `make <target> run` | `sim` on the computer (`poweroff` leaves), `qemu` in QEMU (Ctrl-A X leaves) |
 | `make <target> flash` | builds it and writes it to the device ([Flashing](flashing.md)) |
 | `make test` | the unit tests on the computer, and the system UI's screens compared with the images kept |
-| `make <target> test` | the tests inside it: `sim` runs libpnut's in the simulator |
+| `make <target> test` | the tests inside it: `sim` runs libpnut's and the system program's in the simulator |
+| `make screens` | writes the system UI's screens, as its tests draw them, into `tests/screens`, after looking at them ([Testing](../testing/index.md#screens)) |
 | `make gen` | the interfaces' code from their `.proto` files, into `build/gen` |
 | `make style` | NuttX's `nxstyle` on pnut-os's C code |
 | `make clean` | removes the build |
@@ -78,8 +92,3 @@ One target is configured at a time: building another configures afresh.
     Built by NuttX's own make, the image lacks `pnut.rc` (the overlay is
     passed by pnut-os's Makefile), and NxInit starts nothing. Always build
     through `make <target>`.
-
-!!! warning "Trap: the device build removes nxstyle"
-    A `tdeck-max` build cleans NuttX's host tools, `nxstyle` with them.
-    Build it again before `make style`:
-    `make -C nuttx/tools -f Makefile.host nxstyle`.

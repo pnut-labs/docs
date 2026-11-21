@@ -7,7 +7,9 @@ task is which program, and whether each is ready
 - **Who**: a service asks it who a caller is, from the caller's pid
   (`SO_PEERCRED`): the program's name, or that it was typed in a
   developer's shell (`console`, `adbd`).
-- **Start**, **Stop**: the system UI starts an app's program through it.
+- **Start**, **Stop**: a start or stop passed to NxInit; only the system
+  UI and the system program may call them. Nothing calls them yet: apps'
+  life cycle, RFC 0037's next step, will.
 - A program is ready once every module of its loop is; NxInit is told.
 - After an update, the system program confirms the new firmware once
   every program has stayed ready for 10 s

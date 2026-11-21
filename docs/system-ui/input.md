@@ -16,8 +16,11 @@ key map (`keymap.c`):
 | any other letter | a command letter of the options open |
 
 In a text field the letters type; Backspace deletes; Enter confirms a
-one-line field; Find + Q leaves it, its text kept. A held key repeats
-after half a second, 20 times a second.
+one-line field; Sym + Q leaves it, its text kept (Sym, right of Space, is
+the Find key), and with Sym held W, S and E steer in a field too.
+
+The steering keys (W, S, A, D), Space and Backspace repeat while held:
+after half a second, 20 times a second. A letter being typed does not.
 
 !!! info "Why letters steer"
     The Q20 keyboard has no arrows. W, A, S, D (and Q, E) steer, so a
@@ -27,4 +30,5 @@ after half a second, 20 times a second.
     The digits are printed on letter keys; where a field wants a number (the
     SIM PIN), those letters type their digits (`keymap_digit()`).
 
-A tap is a block's id sent to its screen: a row, a tile, a softkey.
+A tap is a block's id sent to its screen: a row, a tile. A tap on a
+softkey sends its key, as F1 to F3 would.

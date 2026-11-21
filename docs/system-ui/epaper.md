@@ -6,7 +6,8 @@ UI draws by one rule (`redraw.c`, RFC 0019):
 
 - Keys pressed within **500 ms** of the first are drawn once, at the end:
   one redraw per decision.
-- A change no key caused (a topic, the clock) is drawn at once.
+- A change no key caused (a topic, the clock) is drawn at once, or with
+  the keys when they are being gathered.
 - A **full refresh** is due after **5** partial ones, and taken at the
   next change of screen — **never while typing**.
 - Only what differs from the panel is sent.

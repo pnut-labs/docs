@@ -15,8 +15,9 @@ The telephony program drives the modem (an A7682E on the T-Deck Max)
   shell only (`telephony pin <PIN>`). The modem's own restarts are
   followed, three an hour at most.
 - **SMS** goes to and comes from Messages as a transport.
-- **Mobile data** (`telephony.data`, off by default): the AT channel dials
-  the default bearer, then carries PPP to NuttX's pppd through a raw
+- **Mobile data** (`telephony.data`, off by default): the data channel
+  dials the default bearer (the AT channel held meanwhile, since the modem
+  answers nothing on it), then carries PPP to NuttX's pppd through a raw
   pseudo-terminal; a failure hangs up and tries again after 30 s,
   doubling to 10 minutes.
 

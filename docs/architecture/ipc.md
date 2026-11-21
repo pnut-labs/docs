@@ -12,8 +12,9 @@ pages list every call.
 
 A message is a 16-byte header (little-endian: the protocol's version, the
 kind, the interface's number, the method's number and version, the
-status, a sequence number an answer repeats, the body's length) and a
-nanopb body; **4 KB at most**, header included. An answer carries a status:
+status, a sequence number an answer repeats, the body's length, the app
+on the runtime's connections, a stream's credit) and a nanopb body;
+**4 KB at most**, header included. An answer carries a status:
 
 | Status | Means |
 |---|---|
@@ -38,9 +39,8 @@ only when its send buffer has room for the answer beside the room kept
 for the answers it owes; one more than 8 waiting is answered busy.
 
 !!! warning "Trap: many calls at once"
-    A loop that sends a call per item (a notification per conversation, an
-    answer per app) runs out after 8. Send as there is room and go on as
-    answers come back (Messages' re-sync does this).
+    A loop that sends a call per item of a list runs out after 8. Send as
+    there is room and go on as answers come back.
 
 !!! warning "Trap: every call needs its answer handler"
     A call made with no handler is refused (`-EINVAL`), even when its

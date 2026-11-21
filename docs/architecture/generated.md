@@ -24,15 +24,14 @@ it).
 ## Naming
 
 An enum's values are prefixed with the enum's name, nanopb's way:
-`NOTIFICATION_LEVEL_NORMAL` in `enum NotificationLevel` becomes
-`PNUT_NOTIFICATION_LEVEL_NOTIFICATION_LEVEL_NORMAL`. A oneof says which
-member it holds in `which_<oneof>`, by the member's tag,
-`PNUT_<MESSAGE>_<MEMBER>_TAG`.
+`HAPTICS_USE_RING` in `enum HapticsUse` becomes
+`PNUT_HAPTICS_USE_HAPTICS_USE_RING`. A oneof says which member it holds
+in `which_<oneof>`, by the member's tag, `PNUT_<MESSAGE>_<MEMBER>_TAG`.
 
 !!! warning "Trap: a submessage needs its `has_` flag"
     In proto3 a field that is a message is optional: nanopb sends it only
-    when its `has_<field>` is true. A reply's `action` left without
-    `has_action = true` arrives empty.
+    when its `has_<field>` is true. A Settings `Set` request's `value`
+    left without `has_value = true` arrives empty.
 
 !!! warning "Trap: one number, one interface"
     The generator refuses an interface number used twice; a method's
