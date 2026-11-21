@@ -1,0 +1,6 @@
+# The site's tools: Zensical, and protoc with nanopb's options for
+# tools/proto_pages.py
+zensical==0.1.3
+grpcio-tools==1.85.3
+protobuf==7.36.2
+nanopb==0.4.9.3

@@ -1,0 +1,8 @@
+# Built, never kept
+site/
+.cache/
+.venv/
+__pycache__/
+# Written by tools/proto_pages.py from pnut-os's .proto files
+docs/interfaces/
+pnut-os/
