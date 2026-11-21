@@ -45,11 +45,22 @@ nav = [
     { "Storage (cards)" = "subsystems/storage-cards.md" },
     { "Firmware updates" = "subsystems/updates.md" },
   ] },
+  { "System UI" = [
+    { "Screens and the stack" = "system-ui/screens.md" },
+    { "Keys and input" = "system-ui/input.md" },
+    { "E-paper redraw rules" = "system-ui/epaper.md" },
+    { "Templates and app hosting" = "system-ui/apps.md" },
+    { "Theme" = "system-ui/theme.md" },
+  ] },
+  { "Apps" = [
+    { "Writing an app" = "apps/index.md" },
+  ] },
   { "Interfaces" = [
   # interfaces: begin (tools/proto_pages.py)
     { "Overview" = "interfaces/index.md" },
   # interfaces: end
   ] },
+  { "Testing" = "testing/index.md" },
   { "Device and tooling traps" = "traps.md" },
   { "Writing these docs" = "writing.md" },
 ]
