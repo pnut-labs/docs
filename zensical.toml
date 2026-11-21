@@ -8,6 +8,7 @@ site_url = "https://pnut-labs.github.io/docs/"
 repo_url = "https://github.com/pnut-labs/docs"
 repo_name = "pnut-labs/docs"
 edit_uri = "edit/master/docs/"
+extra_css = ["stylesheets/extra.css"]
 copyright = "Copyright 2026 Mateusz Pianka — Apache-2.0"
 
 nav = [
@@ -78,7 +79,7 @@ pymdownx.inlinehilite = {}
 pymdownx.keys = {}
 pymdownx.magiclink = {}
 pymdownx.mark = {}
-pymdownx.smartsymbols = {}
+pymdownx.smartsymbols.fractions = false
 pymdownx.superfences.custom_fences = [
   { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" },
 ]

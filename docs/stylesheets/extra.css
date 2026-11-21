@@ -1,0 +1,6 @@
+/* The Interfaces pages are written at build time from pnut-os's .proto
+   files and are not in this repository, so they have no edit button: the
+   note at the top of each links to its .proto. */
+.md-content__button[rel="edit"][href*="/docs/interfaces/"] {
+  display: none;
+}

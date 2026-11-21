@@ -13,7 +13,9 @@ permissions:
   contents: read
 concurrency:
   group: docs-${{ github.ref }}
-  cancel-in-progress: true
+  # A pull request's newer push replaces its build; master's runs wait for
+  # the one before, so that a deploy is never stopped half-way
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -29,15 +31,17 @@ jobs:
           python-version: "3.13"
       - run: pip install -r requirements.txt
       - run: python tools/proto_pages.py pnut-os docs zensical.toml
+      # --strict checks the pages' links, not the nav's: its Interfaces
+      # entry needs the generated page
+      - run: test -f docs/interfaces/index.md
       - run: zensical build --clean --strict
-      - if: github.event_name != 'pull_request'
-        uses: actions/configure-pages@v6
-      - if: github.event_name != 'pull_request'
+      # Only master is published, whatever branch a run was started on
+      - if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
         uses: actions/upload-pages-artifact@v5
         with:
           path: site
   deploy:
-    if: github.event_name != 'pull_request'
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
     needs: build
     permissions:
       pages: write
