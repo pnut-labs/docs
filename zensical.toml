@@ -29,6 +29,22 @@ nav = [
     { "Storage layout" = "architecture/storage.md" },
     { "Power management" = "architecture/power.md" },
   ] },
+  { "Subsystems" = [
+    { "Board" = "subsystems/board.md" },
+    { "Service states" = "subsystems/service-states.md" },
+    { "Settings" = "subsystems/settings.md" },
+    { "Time" = "subsystems/time.md" },
+    { "Power" = "subsystems/power.md" },
+    { "Telephony" = "subsystems/telephony.md" },
+    { "Network and Wi-Fi" = "subsystems/network.md" },
+    { "Messages" = "subsystems/messages.md" },
+    { "LoRa" = "subsystems/radio.md" },
+    { "Location" = "subsystems/location.md" },
+    { "Motion" = "subsystems/motion.md" },
+    { "Haptics" = "subsystems/haptics.md" },
+    { "Storage (cards)" = "subsystems/storage-cards.md" },
+    { "Firmware updates" = "subsystems/updates.md" },
+  ] },
   { "Interfaces" = [
   # interfaces: begin (tools/proto_pages.py)
     { "Overview" = "interfaces/index.md" },
