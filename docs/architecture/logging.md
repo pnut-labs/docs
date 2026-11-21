@@ -20,7 +20,7 @@ at one of four levels: **error** (someone should look), **warning**,
 ## What never goes in the log
 
 - No passphrase, PIN or key, at any level.
-- No phone number or message text above **debug**; a position never.
+- No phone number, message text or position above **debug**.
 
 !!! info "Why"
     The log is read over adb or the shell, and its warnings and errors

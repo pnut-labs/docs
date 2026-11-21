@@ -49,6 +49,13 @@ names and real messages.
     which breaks the prompt detection: a later command looks hung. Redirect
     it: `cmd > /dev/null &`.
 
+!!! warning "Trap: `nsh> ` in a command's output"
+    The tools take a command as finished when what they have read ends
+    with `nsh> `. Output that holds `nsh> ` itself and pauses there ends
+    the command early: the next command is sent while it still runs, and
+    the rest of its output shows under the next one. Keep `nsh> ` out of
+    test data.
+
 !!! warning "Trap: a hung command"
     `nsh.py` waits for the prompt; if a command never returns, it times out,
     and rerunning it changes nothing. Look with a raw serial read, or reset

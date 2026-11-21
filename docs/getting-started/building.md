@@ -64,7 +64,7 @@ make test UI_PYTHON="$HOME/.cache/pnut-ui/bin/python3"
 | `make <target> flash` | builds it and writes it to the device ([Flashing](flashing.md)) |
 | `make test` | the unit tests on the computer, and the system UI's screens compared with the images kept |
 | `make <target> test` | the tests inside it: `sim` runs libpnut's and the system program's in the simulator |
-| `make screens` | writes the system UI's screens, as its tests draw them, into `tests/screens`, after looking at them ([Testing](../testing/index.md#screens)) |
+| `make screens` | runs the system UI's tests and writes the screens they draw into `tests/screens`, as the images `make test` compares with; look at the images before committing them ([Testing](../testing/index.md#screens)) |
 | `make gen` | the interfaces' code from their `.proto` files, into `build/gen` |
 | `make style` | NuttX's `nxstyle` on pnut-os's C code |
 | `make clean` | removes the build |
