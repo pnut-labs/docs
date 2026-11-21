@@ -19,13 +19,23 @@ nav = [
     { "The shell over serial" = "getting-started/shell.md" },
     { "adb over Wi-Fi" = "getting-started/adb.md" },
   ] },
-  { "Device and tooling traps" = "traps.md" },
-  { "Writing these docs" = "writing.md" },
+  { "Architecture" = [
+    { "Programs and modules" = "architecture/programs.md" },
+    { "The event loop" = "architecture/loop.md" },
+    { "IPC: services, clients, streams" = "architecture/ipc.md" },
+    { "Topics and settings" = "architecture/topics-settings.md" },
+    { "Generated code" = "architecture/generated.md" },
+    { "Logging" = "architecture/logging.md" },
+    { "Storage layout" = "architecture/storage.md" },
+    { "Power management" = "architecture/power.md" },
+  ] },
   { "Interfaces" = [
   # interfaces: begin (tools/proto_pages.py)
     { "Overview" = "interfaces/index.md" },
   # interfaces: end
   ] },
+  { "Device and tooling traps" = "traps.md" },
+  { "Writing these docs" = "writing.md" },
 ]
 
 [project.theme]
