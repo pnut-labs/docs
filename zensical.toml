@@ -13,6 +13,13 @@ copyright = "Copyright 2026 Mateusz Pianka — Apache-2.0"
 
 nav = [
   { "Home" = "index.md" },
+  { "Getting started" = [
+    { "Building" = "getting-started/building.md" },
+    { "Flashing" = "getting-started/flashing.md" },
+    { "The shell over serial" = "getting-started/shell.md" },
+    { "adb over Wi-Fi" = "getting-started/adb.md" },
+  ] },
+  { "Device and tooling traps" = "traps.md" },
   { "Writing these docs" = "writing.md" },
   { "Interfaces" = [
   # interfaces: begin (tools/proto_pages.py)
