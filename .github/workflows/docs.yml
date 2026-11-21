@@ -21,6 +21,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+      # git keeps the Overview entry alone between the interfaces markers
+      # in zensical.toml: the generator writes the rest at build time
+      - run: |
+          nav=$(awk '/# interfaces: end/ { f = 0 } f
+                     /# interfaces: begin/ { f = 1 }' zensical.toml)
+          if [ "$nav" != '    { "Overview" = "interfaces/index.md" },' ]; then
+            echo "::error file=zensical.toml::Between the interfaces markers, keep the Overview entry alone; git restore zensical.toml takes out the generated ones"
+            exit 1
+          fi
       - uses: actions/checkout@v7
         with:
           repository: pnut-labs/pnut-os

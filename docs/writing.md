@@ -20,8 +20,9 @@ git clone https://github.com/pnut-labs/pnut-os ../pnut-os   # once
 git, nor are the generated `docs/interfaces/` pages. Without the
 `tools/proto_pages.py` step the Interfaces section is empty. That step also
 writes the section's navigation into `zensical.toml`, which git keeps with
-the Overview entry alone: do not commit those lines (`git restore
-zensical.toml` takes them out, with any change of your own to the file).
+the Overview entry alone: do not commit those lines, or the pull
+request's check fails (`git restore zensical.toml` takes them out, with
+any change of your own to the file).
 
 ## The Interfaces pages
 
@@ -36,6 +37,11 @@ To change what an interface's page says, change the comments in its
 `.proto` in pnut-os. The site picks it up at its next build: on every
 merge here, every day, and on demand (the workflow's *Run workflow*).
 
+GitHub turns the daily build off after 60 days without a commit here. To
+turn it on again, open the repository's *Actions* tab, choose the
+*Documentation* workflow and press *Enable workflow*, or run
+`gh workflow enable docs.yml --repo pnut-labs/docs`.
+
 ## Conventions
 
 - One page per subsystem, part of the system UI, or topic; a page links to
@@ -49,8 +55,8 @@ merge here, every day, and on demand (the workflow's *Run workflow*).
         sleep.
 
     !!! warning "Trap"
-        A double-quoted word in an NSH command line can leave the command
-        without its prompt.
+        The Wi-Fi driver cannot tell a wrong passphrase from a network out
+        of reach: both end a join with REFUSED.
     ```
 
 - Pages describe master. A pull request in pnut-os that changes behaviour
@@ -70,8 +76,9 @@ merge here, every day, and on demand (the workflow's *Run workflow*).
 
 The site is public. Never write a phone number, an IMEI or an ICCID, a
 PIN, a Wi-Fi network's name or passphrase from a real place, a person's
-name or a message's text, a position, or a key. Screens shown here come
-from the tests' made-up content, never from a phone in use.
+name or a message's text, a position, a key, or a private URL. Screens
+shown here come from the tests' made-up content, never from a phone in
+use.
 The same holds for anything pasted: log lines, shell and adb sessions,
 modem answers and scan results come from the simulator or the tests, or
 have those values replaced with made-up ones. It holds for the comments in

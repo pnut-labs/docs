@@ -9,8 +9,9 @@ own description, then its calls (the interface's number, each method's
 number, version, permission, request and reply), its topics, its settings
 (key, type, default, range or choices, public or secret) and its messages
 and enums, with their fields' limits (nanopb's max_size and max_count,
-optional, sensitive), the numbers a message reserves, and the comments
-written above or beside each in the .proto.  The section's nav in
+optional, sensitive, the oneof it belongs to), under a message's table its
+oneofs' comments and the numbers it reserves, and the comments written
+above or beside each in the .proto.  The section's nav in
 zensical.toml (between the "interfaces" markers) is written to match.
 Nothing here is edited by hand: change the .proto in pnut-os instead.
 """
@@ -263,8 +264,19 @@ def type_name(field):
     return "`" + FIELD_TYPES.get(field.type, "?") + "`"
 
 
-def limits(field):
+def oneof_of(field):
+    """The index of the oneof a field is a member of, or None; a proto3
+    optional field's own (synthetic) oneof is not one."""
+    if field.HasField("oneof_index") and not field.proto3_optional:
+        return field.oneof_index
+    return None
+
+
+def limits(field, msg):
     out = []
+    k = oneof_of(field)
+    if k is not None:
+        out.append("one of %s" % code(msg.oneof_decl[k].name))
     if field.label == 3 and field.type_name not in MAPS:
         out.append("repeated")
     if field.proto3_optional:
@@ -297,6 +309,16 @@ def reserved(msg, path, cm):
     return [("Reserved: %s. " % ", ".join(taken) + desc(text)).strip(), ""]
 
 
+def oneofs(msg, path, cm):
+    """A line for each oneof with a comment: its name and the comment."""
+    out = []
+    for k, o in enumerate(msg.oneof_decl):
+        if any(oneof_of(f) == k for f in msg.field) and cm.get(path + (8, k)):
+            out += [("One of %s: " % code(o.name) +
+                     desc(cm[path + (8, k)])).strip(), ""]
+    return out
+
+
 def message_md(msg, path, cm, depth=3, parent=""):
     full = parent + msg.name
     lines = ["%s `%s` {#%s}" % ("#" * depth, msg.name, anchor(full)), ""]
@@ -310,9 +332,10 @@ def message_md(msg, path, cm, depth=3, parent=""):
         lines += ["| # | Field | Type | Limits | |", "|---|---|---|---|---|"]
         for j, f in enumerate(msg.field):
             lines.append("| %d | `%s` | %s | %s | %s |" % (
-                f.number, f.name, type_name(f), limits(f),
+                f.number, f.name, type_name(f), limits(f, msg),
                 cell(cm.get(path + (2, j), ""))))
         lines.append("")
+    lines += oneofs(msg, path, cm)
     lines += reserved(msg, path, cm)
     for k, e in enumerate(msg.enum_type):
         lines += enum_md(e, path + (4, k), cm, depth + 1, full + "-")
