@@ -10,9 +10,13 @@ python3 tools/device/nsh.py "uname -a" "free" "logs warning"
 python3 tools/device/uiscreen.py -o shot.png "keys alt+enter" "keys s"
 ```
 
-`nsh.py` sends each command and prints its output up to the next prompt;
+`nsh.py` sends each command and prints its output up to the next prompt.
+It stops at the first command whose prompt does not come back within
+`--timeout` (10 s), lists the commands not sent, and exits with 1; a
+command that fails on the device does not change the exit status.
 `uiscreen.py` runs its commands, then saves what the screen shows as a
-PNG. Close any other serial monitor first.
+PNG; when a command prints a `keys:` or `nsh:` error, it stops there and
+saves nothing. Close any other serial monitor first.
 
 ## Commands worth knowing
 
@@ -33,7 +37,7 @@ names and real messages.
     line is lost. Quote it, or avoid it in test data.
 
 !!! warning "Trap: double-quoted arguments"
-    A double-quoted argument (`"Still on for Thursday?"`) once left the
+    A double-quoted argument (`"two words"`) once left the
     command without its prompt, and the next command looked hung. Keep test
     arguments to plain words.
 
@@ -41,7 +45,7 @@ names and real messages.
     A line is 256 bytes at most, and 64 arguments (`CONFIG_LINE_MAX`,
     `CONFIG_NSH_MAXARGUMENTS`; the board's own configuration has 128 and
     16): over them NSH prints an error but still runs the command, cut.
-    `nsh.py --pace 32` types a long line slowly: the console drops
+    `--pace 32` (both tools) types a long line slowly: the console drops
     characters of a fast one.
 
 !!! warning "Trap: background output"
@@ -57,6 +61,6 @@ names and real messages.
     test data.
 
 !!! warning "Trap: a hung command"
-    `nsh.py` waits for the prompt; if a command never returns, it times out,
-    and rerunning it changes nothing. Look with a raw serial read, or reset
-    the board.
+    When a command never returns, the tools give up after `--timeout`, but
+    the command still runs on the board: the next run finds no prompt.
+    Look with a raw serial read, or reset the board.
